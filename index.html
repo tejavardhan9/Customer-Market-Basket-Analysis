@@ -3,137 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Market Basket Analysis</title>
+    <title>Market Basket Insights</title>
     <style>
+        /* Global Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
+            line-height: 1.6;
         }
-        
-        .login-container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            width: 350px;
-            padding: 40px;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in-out;
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        h1 {
-            color: #764ba2;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-        }
-        
-        input {
+
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            box-sizing: border-box;
-            transition: border 0.3s;
+            top: 0;
+            z-index: 1000;
         }
-        
-        input:focus {
-            border-color: #764ba2;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
         }
-        
-        .login-btn {
-            background: linear-gradient(to right, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            width: 100%;
-            transition: all 0.3s;
-            margin-top: 10px;
-        }
-        
-        .login-btn:hover {
-            background: linear-gradient(to right, #5a6fd1, #6a4299);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .signup-link {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .signup-link a {
-            color: #764ba2;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .signup-link a:hover {
-            color: #5a3d84;
-            text-decoration: underline;
-        }
-        
+
         .logo {
-            margin-bottom: 20px;
             font-size: 24px;
             font-weight: bold;
             color: #764ba2;
         }
+
+        .nav-links a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #764ba2;
+        }
+
+        .btn {
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 150px 0 80px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Features Section */
+        .features {
+            background-color: white;
+            padding: 80px 0;
+            border-radius: 10px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .features h2 {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 50px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #764ba2;
+        }
+
+        /* Login/Signup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            width: 350px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 60px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="logo">Market Basket Insights</div>
-        <h1>Customer Market Basket Analysis</h1>
-        
-        <form>
-            <div class="input-group">
-                <label for="customer-id">Customer ID</label>
-                <input type="text" id="customer-id" placeholder="Enter your customer ID" required>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Market Basket Insights</div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#about">About</a>
+                    <a href="#" id="loginBtn">Login</a>
+                    <a href="#" class="btn" id="signupBtn">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Customer Market Basket Analysis</h1>
+            <p>Unlock powerful insights into customer purchasing behavior and optimize your retail strategy with AI-driven analytics.</p>
+            <button class="btn" id="heroSignupBtn">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Purchase Patterns</h3>
+                    <p>Discover which products are frequently bought together to optimize promotions and inventory.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Customer Segmentation</h3>
+                    <p>Identify high-value customers and tailor marketing strategies to different buyer personas.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Real-Time Analytics</h3>
+                    <p>Get instant insights with interactive dashboards and visualizations.</p>
+                </div>
             </div>
-            
-            <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter your password" required>
-            </div>
-            
-            <button type="submit" class="login-btn">Login</button>
-        </form>
-        
-        <div class="signup-link">
-            Don't have an account? <a href="#">Sign up</a>
+        </div>
+    </section>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeLogin">&times;</span>
+            <div class="logo">Market Basket Insights</div>
+            <h2>Login</h2>
+            <form>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="customer-id">Customer ID</label>
+                    <input type="text" id="customer-id" placeholder="Enter your ID" required>
+                </div>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Login</button>
+            </form>
+            <p style="margin-top: 20px;">Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
         </div>
     </div>
-</body>
-</html>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeSignup">&times;</span>
+            <div class="logo">Market Basket Insights</div>
+            <h2>Sign Up</h2>
+            <form>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Your name" required>
+                </div>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Your email" required>
+                </div>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label for="new-password">Password</label>
+                    <input type="password" id="new-password" placeholder="Create password" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Sign Up</button>
+            </form>
+            <p style="margin-top: 20px;">Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Market Basket Insights. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Modal Handling -->
+    <script>
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const heroSignupBtn = document.getElementById('heroSignupBtn');
+        const loginModal = document.getElementById('loginModal');
+        const signupModal = document.getElementById('signupModal');
+        const closeLogin = document.getElementById('closeLogin');
+        const closeSignup = document.getElementById('closeSignup');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const switchToLogin = document.getElementById('switchToLogin');
+
+        // Open Login Modal
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'flex';
+        });
+
+        // Open Signup Modal
+        signupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.style.display = 'flex';
+        });
+
+        heroSignupBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.style.display = 'flex';
+        });
+
+        // Close Modals
+        closeLogin.addEventListener('
